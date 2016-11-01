@@ -1183,3 +1183,8 @@ img.sponsor:hover {
 .panel-default> .panel-heading+ .panel-collapse> .panel-body {
     border-top-color: #EEEEEE;
 }
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+}
