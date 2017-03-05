@@ -1,0 +1,54 @@
+<div class="jumbotron">
+	<div class="row">
+		<h1 class="text-center">Register</h1>
+		<br>
+		<div class="col-sm-6 col-sm-offset-3">
+			<form role="form" name="registerForm" ng-submit="createTeam()">
+				<div class="form-group">
+					<label>Team ID (Team Name):</label>
+					<input type="name" ng-model="team.teamId" placeholder="My_Awesome_Team" class="form-control" required ng-minlength="5">
+					<span class="help-block m-b-none">Only alphanumeric and underscore's allowed and minimum length of 5.</span>
+				</div>
+				<div class="form-group">
+					<label>Primary Member Name:</label>
+					<input type="name" ng-model="team.name" placeholder="My name" class="form-control" required>
+					<span class="help-block m-b-none">Enter full name.</span>
+				</div>
+				<div class="form-group">
+					<label>Primary Mobile Number:</label>
+					<input type="password" pattern="[0-9]*" ng-model="team.phone1" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
+					<span class="help-block m-b-none">This will be your password to login.</span>
+				</div>
+				<div class="form-group">
+					<label>Confirm Mobile Number:</label>
+					<input type="password" ng-model="team.phone2" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
+					<span class="help-block m-b-none">Enter your mobile number again to confirm.</span>
+				</div>
+				<div class="form-group">
+					<label>Enter HackerEarth username:</label>
+					<input type="name" ng-model="team.hackerEarthId" placeholder="my_hackerearth_id" class="form-control" required>
+					<span class="help-block m-b-none">If you don't have one you can register here: <a href="https://www.hackerearth.com" target="_blank">www.hackerearth.com</a></span>
+				</div>
+				<div class="form-group">
+					<label>State:</label>
+					<select class="form-control" ng-model="team.state" ng-init="team.state='Tamil Nadu'">
+						<option ng-selected="true">Tamil Nadu</option>
+						<option>Kerala</option>
+						<option>Karnataka</option>
+						<option>Andhra Pradesh</option>
+						<option>Telangana</option>
+					</select>
+					<span class="help-block m-b-none">Select the state from where you are visiting.</span>
+				</div>
+				<div class="form-group">
+					<label>University / College:</label>
+					<input type="name" ng-model="team.university" placeholder="My College" class="form-control" required ng-minlength="5">
+					<span class="help-block m-b-none">Enter the full name of your college or univeristy.</span>
+				</div>
+				<div>
+					<button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit" ng-disabled="registerForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submitting"><strong>Sign Up</strong></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
