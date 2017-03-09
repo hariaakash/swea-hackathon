@@ -19,7 +19,7 @@ var teamSchema = new Schema({
 	},
 	user_count: Number,
 	zone: {
-		univeristy: String,
+		university: String,
 		state: String
 	},
 	authKey: String

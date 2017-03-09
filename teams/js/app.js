@@ -16,11 +16,8 @@ angular.module('sweaApp', ['ngRoute'])
 				templateUrl: 'pages/register.html',
 				controller: 'regCtrl'
 			})
-			.when('/error', {
-				templateUrl: 'pages/error.html'
-			})
 			.otherwise({
-				redirectTo: '/error'
+				redirectTo: '/login'
 			});
 	});
 
@@ -57,7 +54,7 @@ angular.module('sweaApp')
 		$rootScope.getTeamData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://localhost:3000/team/',
+				url: 'http://localhost:5000/team/',
 				params: {
 					authKey: $rootScope.authKey
 				}
@@ -80,6 +77,7 @@ angular.module('sweaApp')
 		};
 	});
 
+// Registration Controller
 angular.module('sweaApp')
 	.controller('regCtrl', function ($scope, $http, $location, $timeout, $rootScope) {
 		$rootScope.checkAuth();
@@ -99,7 +97,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'http://localhost:3000/team/register',
+					url: 'http://localhost:5000/team/register',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
@@ -130,6 +128,7 @@ angular.module('sweaApp')
 		};
 	});
 
+// Login Controller
 angular.module('sweaApp')
 	.controller('loginCtrl', function ($scope, $http, $location, $rootScope) {
 		$rootScope.checkAuth();
@@ -137,7 +136,7 @@ angular.module('sweaApp')
 		$scope.loginTeam = function () {
 			$http({
 				method: 'POST',
-				url: 'http://localhost:3000/team/login',
+				url: 'http://localhost:5000/team/login',
 				data: $scope.team
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -164,6 +163,7 @@ angular.module('sweaApp')
 		};
 	});
 
+// Home Controller
 angular.module('sweaApp')
 	.controller('homeCtrl', function ($scope, $http, $rootScope, $window, $timeout) {
 		$rootScope.checkAuth();
@@ -183,7 +183,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'http://localhost:3000/team/addMember',
+					url: 'http://localhost:5000/team/addMember',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {

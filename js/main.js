@@ -30,19 +30,7 @@ jQuery(function ($) {
 			else if ($(this).hasClass('cut-bottom'))
 				$(this).css('border-left-width', $(this).parent().width() + "px");
 		});
-
-		// Sliders Init
-		$('.owl-schedule').owlCarousel({
-			pagination: true,
-			loop:true,
-    autoPlay: 7000
-
-		});
 		$('.owl-testimonials').owlCarousel({
-			singleItem: true,
-			pagination: true
-		});
-		$('.owl-twitter').owlCarousel({
 			singleItem: true,
 			pagination: true
 		});
@@ -170,6 +158,7 @@ jQuery(function ($) {
 	$(window).on("resize", function () {
 		$('.modal:visible').each(centerModal);
 	});
+	new WOW().init();
 });
 
 // DISQUS

@@ -1,0 +1,98 @@
+<div class="jumbotron">
+	<div class="row">
+		<h1 class="text-center">Hello ADMIN</h1>
+		<div class="row">
+			<div class="col-md-4 text-center">
+				<div id="panels" class="panel panel-primary">
+					<div class="panel-heading">
+						<h4>Teams</h4>
+						<h1>{{ adminData.teams_count }}</h1>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 text-center">
+				<div id="panels" class="panel panel-warning">
+					<div class="panel-heading">
+						<h4>Participants</h4>
+						<h1>{{ adminData.participants }}</h1>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 text-center">
+				<div id="panels" class="panel panel-danger">
+					<div class="panel-heading">
+						<h4>Payment</h4>
+						<h1>{{ adminData.payment.up }} / {{ adminData.payment.down }}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Team Members</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>TeamId</th>
+								<th>Members</th>
+								<th>Payment</th>
+								<th>Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="x in adminData.teams">
+								<th scope="row">{{ $index+1 }}</th>
+								<th>{{ x.teamId }}</th>
+								<td>{{x.user_count}}</td>
+								<td>{{x.payment.up}} / {{x.payment.down}}</td>
+								<td><i class="fa fa-edit" ng-click="openTeamModal(x)"></i></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- View Team -->
+<div id="teamModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Team {{ x.teamId }}</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Avatar</th>
+							<th>Name</th>
+							<th>Mobile Number</th>
+							<th>Hacker Earth ID</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in teamData.users">
+							<th scope="row">{{ $index+1 }}</th>
+							<th><img src="https://he-s3.s3.amazonaws.com/media/avatars/{{x.hackerEarthId}}/resized/70/photo.jpg"></th>
+							<td>{{x.name}}</td>
+							<td>{{x.phone}}</td>
+							<td>{{x.hackerEarthId}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button class="btn btn-primary pull-right" type="submit" ng-disabled="registerForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Adding" ng-click="addMember()"><strong>Add</strong></button>
+			</div>
+		</div>
+	</div>
+</div>
