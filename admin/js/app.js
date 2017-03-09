@@ -50,7 +50,7 @@ angular.module('sweaApp')
 		$rootScope.getAdminData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://localhost:5000/team/adminGet',
+				url: 'http://proapi.co:5000/team/adminGet',
 				params: {
 					adminKey: $rootScope.adminKey
 				}
@@ -79,7 +79,7 @@ angular.module('sweaApp')
 		$scope.loginAdmin = function () {
 			$http({
 				method: 'POST',
-				url: 'http://localhost:5000/team/adminLogin',
+				url: 'http://proapi.co:5000/team/adminLogin',
 				data: $scope.admin
 			}).then(function (res) {
 				if (res.data.status == true) {
