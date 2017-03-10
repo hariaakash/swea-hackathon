@@ -50,7 +50,7 @@ angular.module('sweaApp')
 		$rootScope.getAdminData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://proapi.co:5000/team/adminGet',
+				url: 'https://sweapp-hariaakash.rhcloud.com/team/adminGet',
 				params: {
 					adminKey: $rootScope.adminKey
 				}
@@ -79,7 +79,7 @@ angular.module('sweaApp')
 		$scope.loginAdmin = function () {
 			$http({
 				method: 'POST',
-				url: 'http://proapi.co:5000/team/adminLogin',
+				url: 'https://sweapp-hariaakash.rhcloud.com/team/adminLogin',
 				data: $scope.admin
 			}).then(function (res) {
 				if (res.data.status == true) {

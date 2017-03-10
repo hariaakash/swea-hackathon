@@ -54,7 +54,7 @@ angular.module('sweaApp')
 		$rootScope.getTeamData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://proapi.co:5000/team/',
+				url: 'https://sweapp-hariaakash.rhcloud.com/team/',
 				params: {
 					authKey: $rootScope.authKey
 				}
@@ -97,7 +97,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'http://proapi.co:5000/team/register',
+					url: 'https://sweapp-hariaakash.rhcloud.com/team/register',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
@@ -136,7 +136,7 @@ angular.module('sweaApp')
 		$scope.loginTeam = function () {
 			$http({
 				method: 'POST',
-				url: 'http://proapi.co:5000/team/login',
+				url: 'https://sweapp-hariaakash.rhcloud.com/team/login',
 				data: $scope.team
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -183,7 +183,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'http://proapi.co:5000/team/addMember',
+					url: 'https://sweapp-hariaakash.rhcloud.com/team/addMember',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
