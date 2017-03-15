@@ -50,7 +50,7 @@ angular.module('sweaApp')
 		$rootScope.getAdminData = function () {
 			$http({
 				method: 'GET',
-				url: 'https://sweapp-hariaakash.rhcloud.com/team/adminGet',
+				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminGet',
 				params: {
 					adminKey: $rootScope.adminKey
 				}
@@ -64,7 +64,7 @@ angular.module('sweaApp')
 						type: 'error',
 						showConfirmButton: true
 					});
-					Cookies.remove('authKey');
+					Cookies.remove('adminKey');
 					$location.path('/login').replace();
 				}
 			}, function (res) {
@@ -79,12 +79,12 @@ angular.module('sweaApp')
 		$scope.loginAdmin = function () {
 			$http({
 				method: 'POST',
-				url: 'https://sweapp-hariaakash.rhcloud.com/team/adminLogin',
+				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminLogin',
 				data: $scope.admin
 			}).then(function (res) {
 				if (res.data.status == true) {
-					var authKey = res.data.adminKey;
-					Cookies.set('adminKey', authKey);
+					var adminKey = res.data.adminKey;
+					Cookies.set('adminKey', adminKey);
 					$location.path('/home').replace();
 					swal({
 						title: 'Success',
@@ -114,5 +114,115 @@ angular.module('sweaApp')
 			$scope.teamData = x;
 			console.log($scope.teamData);
 			$('#teamModal').modal('show');
+		};
+		$scope.deleteTeam = function () {
+			swal({
+				title: 'Are you sure to delete this team?',
+				text: "You won't be able to revert this!",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+			}).then(function () {
+				$http({
+					method: 'POST',
+					url: 'http://sweapp-hariaakash.rhcloud.com/team/deleteTeam',
+					data: {
+						adminKey: $rootScope.adminKey,
+						teamId: $scope.teamData.teamId
+					}
+				}).then(function (res) {
+					if (res.data.status == true) {
+						swal({
+								title: 'Success',
+								text: res.data.msg,
+								type: 'success',
+								timer: 2000,
+								showConfirmButton: false
+							})
+							.then(
+								function () {},
+								function (dismiss) {
+									if (dismiss === 'timer') {
+										$window.location.reload();
+									}
+								}
+							);
+					} else
+						swal({
+							title: 'Failed',
+							text: res.data.msg,
+							type: 'error',
+							timer: 2000,
+							showConfirmButton: true
+						});
+				}, function (res) {
+					swal("Fail", "Some error occurred, try again.", "error");
+				});
+			});
+		};
+		$scope.addPayment = function () {
+			swal({
+				title: 'Enter the amount',
+				input: 'number',
+				showCancelButton: true,
+				inputValidator: function (value) {
+					return new Promise(function (resolve, reject) {
+						if (value) {
+							resolve();
+						} else {
+							reject('You need to write something!');
+						}
+					})
+				}
+			}).then(function (result) {
+				swal({
+					title: 'Dahh you really need to?',
+					html: "Entered amount was: " + result,
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'For god sake, Yes!'
+				}).then(function () {
+					$http({
+						method: 'POST',
+						url: 'http://sweapp-hariaakash.rhcloud.com/team/paymentHandler',
+						data: {
+							adminKey: $rootScope.adminKey,
+							teamId: $scope.teamData.teamId,
+							money: result
+						}
+					}).then(function (res) {
+						if (res.data.status == true) {
+							swal({
+									title: 'Success',
+									text: res.data.msg,
+									type: 'success',
+									timer: 2000,
+									showConfirmButton: false
+								})
+								.then(
+									function () {},
+									function (dismiss) {
+										if (dismiss === 'timer') {
+											$window.location.reload();
+										}
+									}
+								);
+						} else
+							swal({
+								title: 'Failed',
+								text: res.data.msg,
+								type: 'error',
+								timer: 2000,
+								showConfirmButton: true
+							});
+					}, function (res) {
+						swal("Fail", "Some error occurred, try again.", "error");
+					});
+				});
+			});
 		};
 	});

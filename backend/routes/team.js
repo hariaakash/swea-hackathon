@@ -42,7 +42,6 @@ app.post('/register', function (req, res) {
 			teamId: req.body.teamId
 		})
 		.then(function (teams) {
-			console.log(req.body);
 			if (!teams) {
 				var team = new Team();
 				team.teamId = req.body.teamId;
@@ -119,7 +118,7 @@ app.post('/login', function (req, res) {
 		});
 });
 
-
+// Add a team member
 app.post('/addMember', function (req, res) {
 	Team.findOne({
 			teamId: req.body.teamId,
@@ -151,6 +150,40 @@ app.post('/addMember', function (req, res) {
 						status: false,
 						msg: 'Hackerearth username / mobile phone is already registered'
 					});
+			} else
+				res.json({
+					status: false,
+					msg: 'Invalid Request'
+				});
+		})
+		.catch(function (err) {
+			res.json({
+				status: false,
+				msg: err
+			});
+		});
+});
+
+// Edit Team Member
+app.post('/editMember', function (req, res) {
+	Team.findOne({
+			teamId: req.body.teamId,
+			authKey: req.body.authKey
+		})
+		.then(function (team) {
+			if (team) {
+				for (var i = 0; i < team.users.length; i++)
+					if (team.users[i]._id == req.body.user._id) {
+						team.users[i].name = req.body.user.name;
+						team.users[i].phone = req.body.user.phone;
+						team.users[i].hackerEarthId = req.body.user.hackerEarthId;
+						break;
+					}
+				team.save();
+				res.json({
+					status: true,
+					msg: 'Successfully edited team member: ' + req.body.user.name
+				});
 			} else
 				res.json({
 					status: false,
@@ -216,7 +249,76 @@ app.get('/adminGet', function (req, res) {
 				});
 			})
 			.catch(function (err) {
-				console.log(err);
+				res.json({
+					status: false,
+					msg: 'Some error!!'
+				});
+			});
+	} else {
+		res.json({
+			status: false,
+			msg: 'Invalid Request'
+		});
+	}
+});
+
+// Admin Delete a Team
+app.post('/deleteTeam', function (req, res) {
+	if (req.body.adminKey == '7418571f6d814abda162f4b223f786c2') {
+		Team.findOne({
+				teamId: req.body.teamId
+			})
+			.then(function (team) {
+				if (team) {
+					team.remove();
+					team.save();
+					res.json({
+						status: true,
+						msg: 'Deleted Team with TeamId: ' + req.body.teamId
+					});
+				} else {
+					res.json({
+						status: false,
+						msg: 'Invalid Request'
+					});
+				}
+			})
+			.catch(function (err) {
+				res.json({
+					status: false,
+					msg: 'Some error!!'
+				});
+			});
+	} else {
+		res.json({
+			status: false,
+			msg: 'Invalid Request'
+		});
+	}
+});
+
+// Add/Reduce Payment
+app.post('/paymentHandler', function (req, res) {
+	if (req.body.adminKey == '7418571f6d814abda162f4b223f786c2') {
+		Team.findOne({
+				teamId: req.body.teamId
+			})
+			.then(function (team) {
+				if (team) {
+					team.payment.up += Number(req.body.money);
+					team.save();
+					res.json({
+						status: true,
+						msg: 'Successfully edited payment for team: ' + req.body.teamId
+					});
+				} else {
+					res.json({
+						status: false,
+						msg: 'Invalid Request'
+					});
+				}
+			})
+			.catch(function (err) {
 				res.json({
 					status: false,
 					msg: 'Some error!!'

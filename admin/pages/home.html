@@ -65,9 +65,27 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Team {{ x.teamId }}</h4>
+				<h4 class="modal-title">Team "{{ teamData.teamId }}"</h4>
 			</div>
 			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6 text-center">
+						<div id="panels" class="panel panel-primary">
+							<div class="panel-heading">
+								<h4>Members</h4>
+								<h1>{{ teamData.user_count }}/4</h1>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 text-center">
+						<div id="panels" class="panel panel-danger">
+							<div class="panel-heading">
+								<h4>Payment</h4>
+								<h1>{{ teamData.payment.up }} / {{ teamData.payment.down }}</h1>
+							</div>
+						</div>
+					</div>
+				</div>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -90,8 +108,9 @@
 				</table>
 			</div>
 			<div class="modal-footer">
+				<button class="btn btn-danger pull-left" ng-click="deleteTeam()"><strong>Delete</strong></button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button class="btn btn-primary pull-right" type="submit" ng-disabled="registerForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Adding" ng-click="addMember()"><strong>Add</strong></button>
+				<button class="btn btn-primary" ng-click="addPayment()"><strong>Add Money</strong></button>
 			</div>
 		</div>
 	</div>

@@ -37,21 +37,19 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Avatar</th>
 								<th>Name</th>
 								<th>Mobile Number</th>
-								<th>Hacker Earth Username</th>
+								<th>Hacker Earth Email</th>
 								<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="x in teamData.users">
 								<th scope="row">{{ $index+1 }}</th>
-								<th><img src="https://he-s3.s3.amazonaws.com/media/avatars/{{x.hackerEarthId}}/resized/70/photo.jpg"></th>
 								<td>{{x.name}}</td>
 								<td>{{x.phone}}</td>
 								<td>{{x.hackerEarthId}}</td>
-								<td><i class="fa fa-edit"></i></td>
+								<td><i class="fa fa-edit" ng-click="openMemberModal(x)"></i></td>
 							</tr>
 						</tbody>
 						<div class="pull-right">
@@ -73,7 +71,7 @@
 				<h4 class="modal-title">Add a Member</h4>
 			</div>
 			<div class="modal-body">
-				<form role="form" name="registerForm">
+				<form role="form" name="addForm">
 					<div class="form-group">
 						<label>Member Name:</label>
 						<input type="name" ng-model="team.name" placeholder="Name" class="form-control" required ng-minlength="5">
@@ -81,24 +79,59 @@
 					</div>
 					<div class="form-group">
 						<label>Mobile Number:</label>
-						<input type="password" pattern="[0-9]*" ng-model="team.phone1" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
+						<input type="number" pattern="[0-9]*" ng-model="team.phone1" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
 						<span class="help-block m-b-none">Enter your phone number.</span>
 					</div>
 					<div class="form-group">
 						<label>Confirm Mobile Number:</label>
-						<input type="password" ng-model="team.phone2" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
+						<input type="number" ng-model="team.phone2" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
 						<span class="help-block m-b-none">For confirmation.</span>
 					</div>
 					<div class="form-group">
-						<label>HackerEarth username:</label>
-						<input type="name" ng-model="team.hackerEarthId" placeholder="my_hackerearth_id" class="form-control" required>
+						<label>HackerEarth email:</label>
+						<input type="email" ng-model="team.hackerEarthId" placeholder="my_hackerearth_id" class="form-control" required>
 						<span class="help-block m-b-none">If you don't have one you can register here: <a href="https://www.hackerearth.com" target="_blank">www.hackerearth.com</a></span>
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button class="btn btn-primary pull-right" type="submit" ng-disabled="registerForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Adding" ng-click="addMember()"><strong>Add</strong></button>
+				<button class="btn btn-primary pull-right" type="submit" ng-disabled="addForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Adding" ng-click="addMember()"><strong>Add</strong></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Member Modal -->
+<div id="memberModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Edit Member : {{memberData.name}}</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" name="registerForm">
+					<div class="form-group">
+						<label>Member Name:</label>
+						<input type="name" ng-model="memberData.name" placeholder="Name" class="form-control" required ng-minlength="5">
+						<span class="help-block m-b-none">Enter full name as seen in your ID proof.</span>
+					</div>
+					<div class="form-group">
+						<label>Mobile Number:</label>
+						<input type="number" pattern="[0-9]*" ng-model="memberData.phone" placeholder="9876543210" class="form-control" required ng-minlength="10" ng-maxlength="10">
+						<span class="help-block m-b-none">Enter your phone number.</span>
+					</div>
+					<div class="form-group">
+						<label>HackerEarth email:</label>
+						<input type="email" ng-model="memberData.hackerEarthId" placeholder="em@i.l" class="form-control" required>
+						<span class="help-block m-b-none">If you don't have one you can register here: <a href="https://www.hackerearth.com" target="_blank">www.hackerearth.com</a></span>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button class="btn btn-primary pull-right" type="submit" ng-disabled="registerForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Saving" ng-click="editMember()"><strong>Save</strong></button>
 			</div>
 		</div>
 	</div>

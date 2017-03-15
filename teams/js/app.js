@@ -170,6 +170,11 @@ angular.module('sweaApp')
 		$scope.openAddMemberModal = function () {
 			$('#addMemberModal').modal('show');
 		};
+		$scope.openMemberModal = function (x) {
+			$scope.memberData = x;
+			console.log($scope.memberData);
+			$('#memberModal').modal('show');
+		};
 		$scope.addMember = function () {
 			if ($scope.team.phone1 === $scope.team.phone2) {
 				$('#button_load').button('loading');
@@ -213,5 +218,46 @@ angular.module('sweaApp')
 				swal("Fail", "Mobile Number's are not same, try again.", "error");
 				$('#button_load').button('reset');
 			}
+		};
+		$scope.editMember = function () {
+			$('#button_load').button('loading');
+			$scope.data = {};
+			$scope.data.teamId = $rootScope.teamData.teamId;
+			$scope.data.authKey = $rootScope.authKey;
+			$scope.data.user = {
+				phone: $scope.memberData.phone,
+				name: $scope.memberData.name,
+				hackerEarthId: $scope.memberData.hackerEarthId,
+				_id: $scope.memberData._id
+			};
+			$scope.data.x = $scope.x;
+			$http({
+				method: 'POST',
+				url: 'https://sweapp-hariaakash.rhcloud.com/team/editMember',
+				data: $scope.data
+			}).then(function (res) {
+				if (res.data.status == true) {
+					swal({
+						title: 'Success',
+						text: res.data.msg,
+						type: 'success',
+						showConfirmButton: false
+					});
+					$timeout(function () {
+						$window.location.reload();
+					}, 2000);
+				} else {
+					swal({
+						title: 'Failed',
+						text: res.data.msg,
+						type: 'error',
+						showConfirmButton: true
+					});
+					$('#button_load').button('reset');
+				}
+			}, function (res) {
+				swal("Fail", "Some error occurred, try again.", "error");
+				$('#button_load').button('reset');
+			});
 		};
 	});
