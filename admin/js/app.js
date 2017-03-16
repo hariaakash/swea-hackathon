@@ -57,7 +57,6 @@ angular.module('sweaApp')
 			}).then(function (res) {
 				if (res.data.status == true) {
 					$rootScope.adminData = res.data.data;
-					console.log($rootScope.adminData);
 					for (i = 0; i < $rootScope.adminData.teams.length; i++) {
 						$rootScope.adminData.teams[i].tCount = 0;
 						for (j = 0; j < $rootScope.adminData.teams[i].transaction.length; j++) {
@@ -120,7 +119,6 @@ angular.module('sweaApp')
 		$rootScope.checkAuth();
 		$scope.openTeamModal = function (x) {
 			$scope.teamData = x;
-			console.log($scope.teamData);
 			$('#teamModal').modal('show');
 		};
 		$scope.deleteTeam = function () {

@@ -172,7 +172,6 @@ angular.module('sweaApp')
 		};
 		$scope.openMemberModal = function (x) {
 			$scope.memberData = x;
-			console.log($scope.memberData);
 			$('#memberModal').modal('show');
 		};
 		$scope.openTransactionModal = function () {
