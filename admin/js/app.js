@@ -50,13 +50,21 @@ angular.module('sweaApp')
 		$rootScope.getAdminData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminGet',
+				url: 'http://localhost:5000/team/adminGet',
 				params: {
 					adminKey: $rootScope.adminKey
 				}
 			}).then(function (res) {
 				if (res.data.status == true) {
 					$rootScope.adminData = res.data.data;
+					console.log($rootScope.adminData);
+					for (i = 0; i < $rootScope.adminData.teams.length; i++) {
+						$rootScope.adminData.teams[i].tCount = 0;
+						for (j = 0; j < $rootScope.adminData.teams[i].transaction.length; j++) {
+							if ($rootScope.adminData.teams[i].transaction[j].status == 'false')
+								$rootScope.adminData.teams[i].tCount++;
+						}
+					}
 				} else {
 					swal({
 						title: 'Failed',
@@ -79,7 +87,7 @@ angular.module('sweaApp')
 		$scope.loginAdmin = function () {
 			$http({
 				method: 'POST',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminLogin',
+				url: 'http://localhost:5000/team/adminLogin',
 				data: $scope.admin
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -127,7 +135,7 @@ angular.module('sweaApp')
 			}).then(function () {
 				$http({
 					method: 'POST',
-					url: 'http://sweapp-hariaakash.rhcloud.com/team/deleteTeam',
+					url: 'http://localhost:5000/team/deleteTeam',
 					data: {
 						adminKey: $rootScope.adminKey,
 						teamId: $scope.teamData.teamId
@@ -188,7 +196,7 @@ angular.module('sweaApp')
 				}).then(function () {
 					$http({
 						method: 'POST',
-						url: 'http://sweapp-hariaakash.rhcloud.com/team/paymentHandler',
+						url: 'http://localhost:5000/team/paymentHandler',
 						data: {
 							adminKey: $rootScope.adminKey,
 							teamId: $scope.teamData.teamId,
@@ -222,6 +230,65 @@ angular.module('sweaApp')
 					}, function (res) {
 						swal("Fail", "Some error occurred, try again.", "error");
 					});
+				});
+			});
+		};
+		$scope.changeTransactionStatus = function (tid) {
+			swal({
+				title: 'Enter the status',
+				input: 'radio',
+				inputOptions: {
+					'true': 'Paid',
+					'false': 'Not viewed',
+					'failed': 'Failed'
+				},
+				showCancelButton: true,
+				inputValidator: function (value) {
+					return new Promise(function (resolve, reject) {
+						if (value) {
+							resolve();
+						} else {
+							reject('You need to write something!');
+						}
+					})
+				}
+			}).then(function (result) {
+				$http({
+					method: 'POST',
+					url: 'http://localhost:5000/team/changeTransactionStatus',
+					data: {
+						adminKey: $rootScope.adminKey,
+						teamId: $scope.teamData.teamId,
+						tid: tid,
+						status: '' + result
+					}
+				}).then(function (res) {
+					if (res.data.status == true) {
+						swal({
+								title: 'Success',
+								text: res.data.msg,
+								type: 'success',
+								timer: 2000,
+								showConfirmButton: false
+							})
+							.then(
+								function () {},
+								function (dismiss) {
+									if (dismiss === 'timer') {
+										$window.location.reload();
+									}
+								}
+							);
+					} else
+						swal({
+							title: 'Failed',
+							text: res.data.msg,
+							type: 'error',
+							timer: 2000,
+							showConfirmButton: true
+						});
+				}, function (res) {
+					swal("Fail", "Some error occurred, try again.", "error");
 				});
 			});
 		};

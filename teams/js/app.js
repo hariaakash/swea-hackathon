@@ -54,7 +54,7 @@ angular.module('sweaApp')
 		$rootScope.getTeamData = function () {
 			$http({
 				method: 'GET',
-				url: 'https://sweapp-hariaakash.rhcloud.com/team/',
+				url: 'http://localhost:5000/team/',
 				params: {
 					authKey: $rootScope.authKey
 				}
@@ -97,7 +97,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'https://sweapp-hariaakash.rhcloud.com/team/register',
+					url: 'http://localhost:5000/team/register',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
@@ -136,7 +136,7 @@ angular.module('sweaApp')
 		$scope.loginTeam = function () {
 			$http({
 				method: 'POST',
-				url: 'https://sweapp-hariaakash.rhcloud.com/team/login',
+				url: 'http://localhost:5000/team/login',
 				data: $scope.team
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -175,6 +175,9 @@ angular.module('sweaApp')
 			console.log($scope.memberData);
 			$('#memberModal').modal('show');
 		};
+		$scope.openTransactionModal = function () {
+			$('#transactionModal').modal('show');
+		};
 		$scope.addMember = function () {
 			if ($scope.team.phone1 === $scope.team.phone2) {
 				$('#button_load').button('loading');
@@ -188,7 +191,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'https://sweapp-hariaakash.rhcloud.com/team/addMember',
+					url: 'http://localhost:5000/team/addMember',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
@@ -233,7 +236,44 @@ angular.module('sweaApp')
 			$scope.data.x = $scope.x;
 			$http({
 				method: 'POST',
-				url: 'https://sweapp-hariaakash.rhcloud.com/team/editMember',
+				url: 'http://localhost:5000/team/editMember',
+				data: $scope.data
+			}).then(function (res) {
+				if (res.data.status == true) {
+					swal({
+						title: 'Success',
+						text: res.data.msg,
+						type: 'success',
+						showConfirmButton: false
+					});
+					$timeout(function () {
+						$window.location.reload();
+					}, 2000);
+				} else {
+					swal({
+						title: 'Failed',
+						text: res.data.msg,
+						type: 'error',
+						showConfirmButton: true
+					});
+					$('#button_load').button('reset');
+				}
+			}, function (res) {
+				swal("Fail", "Some error occurred, try again.", "error");
+				$('#button_load').button('reset');
+			});
+		};
+		$scope.addTransaction = function () {
+			$('#button_load').button('loading');
+			$scope.data = {
+				authKey: $rootScope.authKey,
+				teamId: $rootScope.teamData.teamId,
+				phone: $scope.transaction.phone,
+				tid: $scope.transaction.tid
+			};
+			$http({
+				method: 'POST',
+				url: 'http://localhost:5000/team/addTransaction',
 				data: $scope.data
 			}).then(function (res) {
 				if (res.data.status == true) {

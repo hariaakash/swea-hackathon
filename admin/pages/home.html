@@ -2,7 +2,7 @@
 	<div class="row">
 		<h1 class="text-center">Hello ADMIN</h1>
 		<div class="row">
-			<div class="col-md-4 text-center">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
 				<div id="panels" class="panel panel-primary">
 					<div class="panel-heading">
 						<h4>Teams</h4>
@@ -10,7 +10,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 text-center">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
 				<div id="panels" class="panel panel-warning">
 					<div class="panel-heading">
 						<h4>Participants</h4>
@@ -18,7 +18,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 text-center">
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
 				<div id="panels" class="panel panel-danger">
 					<div class="panel-heading">
 						<h4>Payment</h4>
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-12">
+		<div class="col-lg-12 col-md-12 col-sm-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Team Members</h3>
@@ -40,6 +40,7 @@
 								<th>TeamId</th>
 								<th>Members</th>
 								<th>Payment</th>
+								<th>PR</th>
 								<th>Edit</th>
 							</tr>
 						</thead>
@@ -49,7 +50,8 @@
 								<th>{{ x.teamId }}</th>
 								<td>{{x.user_count}}</td>
 								<td>{{x.payment.up}} / {{x.payment.down}}</td>
-								<td><i class="fa fa-edit" ng-click="openTeamModal(x)"></i></td>
+								<td><button class="btn btn-sm" ng-class="{ 'btn-danger': x.tCount>0, 'btn-default': x.tCount==0 }">{{x.tCount}}</button></td>
+								<td><button class="btn btn-primary btn-sm" ng-click="openTeamModal(x)"><i class="fa fa-edit"></i></button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -67,7 +69,7 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Team "{{ teamData.teamId }}"</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body text-center">
 				<div class="row">
 					<div class="col-md-6 text-center">
 						<div id="panels" class="panel panel-primary">
@@ -86,11 +88,11 @@
 						</div>
 					</div>
 				</div>
+				<p>Team Members</p>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Avatar</th>
 							<th>Name</th>
 							<th>Mobile Number</th>
 							<th>Hacker Earth ID</th>
@@ -99,10 +101,32 @@
 					<tbody>
 						<tr ng-repeat="x in teamData.users">
 							<th scope="row">{{ $index+1 }}</th>
-							<th><img src="https://he-s3.s3.amazonaws.com/media/avatars/{{x.hackerEarthId}}/resized/70/photo.jpg"></th>
 							<td>{{x.name}}</td>
 							<td>{{x.phone}}</td>
 							<td>{{x.hackerEarthId}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>Payment Verification</p>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Paytm Transaction ID</th>
+							<th>Mobile Number</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="q in teamData.transaction">
+							<th scope="row">{{ $index+1 }}</th>
+							<td>{{q.tid}}</td>
+							<td>{{q.number}}</td>
+							<td>
+								<button class="btn btn-success" ng-show="q.status=='true'" ng-click="changeTransactionStatus(q._id)"><i class="fa fa-check"></i></button>
+								<button class="btn btn-warning" ng-show="q.status=='false'" ng-click="changeTransactionStatus(q._id)"><i class="fa fa-eye-slash"></i></button>
+								<button class="btn btn-danger" ng-show="q.status=='failed'" ng-click="changeTransactionStatus(q._id)"><i class="fa fa-close"></i></button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
