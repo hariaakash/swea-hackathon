@@ -50,7 +50,7 @@ angular.module('sweaApp')
 		$rootScope.getAdminData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://localhost:5000/team/adminGet',
+				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminGet',
 				params: {
 					adminKey: $rootScope.adminKey
 				}
@@ -87,7 +87,7 @@ angular.module('sweaApp')
 		$scope.loginAdmin = function () {
 			$http({
 				method: 'POST',
-				url: 'http://localhost:5000/team/adminLogin',
+				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminLogin',
 				data: $scope.admin
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -135,7 +135,7 @@ angular.module('sweaApp')
 			}).then(function () {
 				$http({
 					method: 'POST',
-					url: 'http://localhost:5000/team/deleteTeam',
+					url: 'http://sweapp-hariaakash.rhcloud.com/team/deleteTeam',
 					data: {
 						adminKey: $rootScope.adminKey,
 						teamId: $scope.teamData.teamId
@@ -196,7 +196,7 @@ angular.module('sweaApp')
 				}).then(function () {
 					$http({
 						method: 'POST',
-						url: 'http://localhost:5000/team/paymentHandler',
+						url: 'http://sweapp-hariaakash.rhcloud.com/team/paymentHandler',
 						data: {
 							adminKey: $rootScope.adminKey,
 							teamId: $scope.teamData.teamId,
@@ -255,7 +255,7 @@ angular.module('sweaApp')
 			}).then(function (result) {
 				$http({
 					method: 'POST',
-					url: 'http://localhost:5000/team/changeTransactionStatus',
+					url: 'http://sweapp-hariaakash.rhcloud.com/team/changeTransactionStatus',
 					data: {
 						adminKey: $rootScope.adminKey,
 						teamId: $scope.teamData.teamId,
