@@ -12,6 +12,10 @@ angular.module('sweaApp', ['ngRoute'])
 				templateUrl: 'pages/login.html',
 				controller: 'loginCtrl'
 			})
+			.when('/email', {
+				templateUrl: 'pages/email.html',
+				controller: 'emailCtrl'
+			})
 			.otherwise({
 				redirectTo: '/login'
 			});
@@ -57,11 +61,25 @@ angular.module('sweaApp')
 			}).then(function (res) {
 				if (res.data.status == true) {
 					$rootScope.adminData = res.data.data;
-					for (i = 0; i < $rootScope.adminData.teams.length; i++) {
-						$rootScope.adminData.teams[i].tCount = 0;
-						for (j = 0; j < $rootScope.adminData.teams[i].transaction.length; j++) {
-							if ($rootScope.adminData.teams[i].transaction[j].status == 'false')
-								$rootScope.adminData.teams[i].tCount++;
+					for (i = 0; i < $rootScope.adminData.teams1.length; i++) {
+						$rootScope.adminData.teams1[i].tCount = 0;
+						for (j = 0; j < $rootScope.adminData.teams1[i].transaction.length; j++) {
+							if ($rootScope.adminData.teams1[i].transaction[j].status == 'false')
+								$rootScope.adminData.teams1[i].tCount++;
+						}
+					}
+					for (i = 0; i < $rootScope.adminData.teams2.length; i++) {
+						$rootScope.adminData.teams2[i].tCount = 0;
+						for (j = 0; j < $rootScope.adminData.teams2[i].transaction.length; j++) {
+							if ($rootScope.adminData.teams2[i].transaction[j].status == 'false')
+								$rootScope.adminData.teams2[i].tCount++;
+						}
+					}
+					for (i = 0; i < $rootScope.adminData.teams3.length; i++) {
+						$rootScope.adminData.teams3[i].tCount = 0;
+						for (j = 0; j < $rootScope.adminData.teams3[i].transaction.length; j++) {
+							if ($rootScope.adminData.teams3[i].transaction[j].status == 'false')
+								$rootScope.adminData.teams3[i].tCount++;
 						}
 					}
 				} else {
@@ -79,6 +97,7 @@ angular.module('sweaApp')
 			});
 		};
 	});
+
 // Login Controller
 angular.module('sweaApp')
 	.controller('loginCtrl', function ($scope, $http, $location, $rootScope) {
@@ -166,6 +185,43 @@ angular.module('sweaApp')
 				}, function (res) {
 					swal("Fail", "Some error occurred, try again.", "error");
 				});
+			});
+		};
+		$scope.sendStatus = function () {
+			$http({
+				method: 'POST',
+				url: 'http://sweapp-hariaakash.rhcloud.com/team/sendStatus',
+				data: {
+					adminKey: $rootScope.adminKey,
+					teamId: $scope.teamData.teamId
+				}
+			}).then(function (res) {
+				if (res.data.status == true) {
+					swal({
+							title: 'Success',
+							text: res.data.msg,
+							type: 'success',
+							timer: 2000,
+							showConfirmButton: false
+						})
+						.then(
+							function () {},
+							function (dismiss) {
+								if (dismiss === 'timer') {
+									$window.location.reload();
+								}
+							}
+						);
+				} else
+					swal({
+						title: 'Failed',
+						text: res.data.msg,
+						type: 'error',
+						timer: 2000,
+						showConfirmButton: true
+					});
+			}, function (res) {
+				swal("Fail", "Some error occurred, try again.", "error");
 			});
 		};
 		$scope.addPayment = function () {
@@ -290,4 +346,33 @@ angular.module('sweaApp')
 				});
 			});
 		};
+	});
+
+// Email Controller
+angular.module('sweaApp')
+	.controller('emailCtrl', function ($scope, $http, $location, $rootScope) {
+		$rootScope.checkAuth();
+		$scope.getEmail = function () {
+			$http({
+				method: 'GET',
+				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminGetEmail',
+				params: {
+					adminKey: $scope.adminKey
+				}
+			}).then(function (res) {
+				if (res.data.status == true) {
+					$scope.emailData = res.data.data;
+				} else
+					swal({
+						title: 'Failed',
+						text: res.data.msg,
+						type: 'error',
+						timer: 2000,
+						showConfirmButton: true
+					});
+			}, function (res) {
+				swal("Fail", "Some error occurred, try again.", "error");
+			});
+		};
+		$scope.getEmail();
 	});

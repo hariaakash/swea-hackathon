@@ -11,9 +11,10 @@
   "dependencies": {
     "body-parser": "^1.17.0",
     "cors": "^2.8.1",
-    "express": "^4.15.0",
+    "express": "^4.15.2",
     "hat": "0.0.3",
     "mongoose": "^4.8.1",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "sendgrid": "^4.8.2"
   }
 }

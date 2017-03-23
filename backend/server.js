@@ -21,6 +21,10 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use('/team', team);
 
+app.get('/', function (req, res) {
+	res.json('hi');
+});
+
 
 app.listen(port);
 console.log('Server running on port: ' + port);

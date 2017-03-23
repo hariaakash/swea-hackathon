@@ -33,28 +33,99 @@
 					<h3 class="panel-title">Team Members</h3>
 				</div>
 				<div class="panel-body">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>TeamId</th>
-								<th>Members</th>
-								<th>Payment</th>
-								<th>PR</th>
-								<th>Edit</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="x in adminData.teams">
-								<th scope="row">{{ $index+1 }}</th>
-								<th>{{ x.teamId }}</th>
-								<td>{{x.user_count}}</td>
-								<td>{{x.payment.up}} / {{x.payment.down}}</td>
-								<td><button class="btn btn-sm" ng-class="{ 'btn-danger': x.tCount>0, 'btn-default': x.tCount==0 }">{{x.tCount}}</button></td>
-								<td><button class="btn btn-primary btn-sm" ng-click="openTeamModal(x)"><i class="fa fa-edit"></i></button></td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="table-responsive">
+						<h3>Kanjoos</h3>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>TeamId</th>
+									<th>Members</th>
+									<th>Payment</th>
+									<th>Member</th>
+									<th>PR</th>
+									<th>State</th>
+									<th>University</th>
+									<th>Edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="x in adminData.teams1">
+									<td scope="row">{{$index+1}}</td>
+									<td>{{x.teamId}}</td>
+									<td>{{x.user_count}}</td>
+									<td>{{x.payment.up}} / {{x.payment.down}}</td>
+									<td>{{x.users[0].name}}<br> {{x.users[0].phone}}</td>
+									<td><button class="btn btn-sm" ng-class="{ 'btn-danger': x.tCount>0, 'btn-default': x.tCount==0 }">{{x.tCount}}</button></td>
+									<td>{{x.zone.state}}</td>
+									<td>{{x.zone.university}}</td>
+									<td><button class="btn btn-primary btn-sm" ng-click="openTeamModal(x)"><i class="fa fa-edit"></i></button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-responsive">
+						<h3>Incomplete</h3>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>TeamId</th>
+									<th>Members</th>
+									<th>Payment</th>
+									<th>Member</th>
+									<th>PR</th>
+									<th>State</th>
+									<th>University</th>
+									<th>Edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="x in adminData.teams2">
+									<td scope="row">{{$index+1}}</td>
+									<td>{{x.teamId}}</td>
+									<td>{{x.user_count}}</td>
+									<td>{{x.payment.up}} / {{x.payment.down}}</td>
+									<td>{{x.users[0].name}}<br> {{x.users[0].phone}}</td>
+									<td><button class="btn btn-sm" ng-class="{ 'btn-danger': x.tCount>0, 'btn-default': x.tCount==0 }">{{x.tCount}}</button></td>
+									<td>{{x.zone.state}}</td>
+									<td>{{x.zone.university}}</td>
+									<td><button class="btn btn-primary btn-sm" ng-click="openTeamModal(x)"><i class="fa fa-edit"></i></button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-responsive">
+						<h3>Completed</h3>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>TeamId</th>
+									<th>Members</th>
+									<th>Payment</th>
+									<th>Member</th>
+									<th>PR</th>
+									<th>State</th>
+									<th>University</th>
+									<th>Edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="x in adminData.teams3">
+									<td scope="row">{{$index+1}}</td>
+									<td>{{x.teamId}}</td>
+									<td>{{x.user_count}}</td>
+									<td>{{x.payment.up}} / {{x.payment.down}}</td>
+									<td>{{x.users[0].name}}<br> {{x.users[0].phone}}</td>
+									<td><button class="btn btn-sm" ng-class="{ 'btn-danger': x.tCount>0, 'btn-default': x.tCount==0 }">{{x.tCount}}</button></td>
+									<td>{{x.zone.state}}</td>
+									<td>{{x.zone.university}}</td>
+									<td><button class="btn btn-primary btn-sm" ng-click="openTeamModal(x)"><i class="fa fa-edit"></i></button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -88,6 +159,7 @@
 						</div>
 					</div>
 				</div>
+				<h4>State: {{ teamData.zone.state}} / University: {{teamData.zone.university}}</h4>
 				<p>Team Members</p>
 				<table class="table table-bordered">
 					<thead>
@@ -133,6 +205,7 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-danger pull-left" ng-click="deleteTeam()"><strong>Delete</strong></button>
+				<button class="btn btn-primary pull-left" ng-click="sendStatus()"><strong>Send Payment Status</strong></button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button class="btn btn-primary" ng-click="addPayment()"><strong>Add Money</strong></button>
 			</div>

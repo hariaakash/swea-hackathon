@@ -22,7 +22,12 @@ var teamSchema = new Schema({
 		university: String,
 		state: String
 	},
-	authKey: String
+	authKey: String,
+	transaction: [{
+		tid: String,
+		status: String,
+		number: Number
+	}]
 });
 
 module.exports = mongoose.model('Team', teamSchema);
