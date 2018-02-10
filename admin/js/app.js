@@ -54,7 +54,7 @@ angular.module('sweaApp')
 		$rootScope.getAdminData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminGet',
+				url: 'http://localhost:5000/team/adminGet',
 				params: {
 					adminKey: $rootScope.adminKey
 				}
@@ -105,7 +105,7 @@ angular.module('sweaApp')
 		$scope.loginAdmin = function () {
 			$http({
 				method: 'POST',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminLogin',
+				url: 'http://localhost:5000/team/adminLogin',
 				data: $scope.admin
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -152,7 +152,7 @@ angular.module('sweaApp')
 			}).then(function () {
 				$http({
 					method: 'POST',
-					url: 'http://sweapp-hariaakash.rhcloud.com/team/deleteTeam',
+					url: 'http://localhost:5000/team/deleteTeam',
 					data: {
 						adminKey: $rootScope.adminKey,
 						teamId: $scope.teamData.teamId
@@ -190,7 +190,7 @@ angular.module('sweaApp')
 		$scope.sendStatus = function () {
 			$http({
 				method: 'POST',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/sendStatus',
+				url: 'http://localhost:5000/team/sendStatus',
 				data: {
 					adminKey: $rootScope.adminKey,
 					teamId: $scope.teamData.teamId
@@ -250,7 +250,7 @@ angular.module('sweaApp')
 				}).then(function () {
 					$http({
 						method: 'POST',
-						url: 'http://sweapp-hariaakash.rhcloud.com/team/paymentHandler',
+						url: 'http://localhost:5000/team/paymentHandler',
 						data: {
 							adminKey: $rootScope.adminKey,
 							teamId: $scope.teamData.teamId,
@@ -309,7 +309,7 @@ angular.module('sweaApp')
 			}).then(function (result) {
 				$http({
 					method: 'POST',
-					url: 'http://sweapp-hariaakash.rhcloud.com/team/changeTransactionStatus',
+					url: 'http://localhost:5000/team/changeTransactionStatus',
 					data: {
 						adminKey: $rootScope.adminKey,
 						teamId: $scope.teamData.teamId,
@@ -355,21 +355,9 @@ angular.module('sweaApp')
 		$scope.getEmail = function () {
 			$http({
 				method: 'GET',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/adminGetEmail',
-				params: {
-					adminKey: $scope.adminKey
-				}
+				url: './js/email.json'
 			}).then(function (res) {
-				if (res.data.status == true) {
-					$scope.emailData = res.data.data;
-				} else
-					swal({
-						title: 'Failed',
-						text: res.data.msg,
-						type: 'error',
-						timer: 2000,
-						showConfirmButton: true
-					});
+				$scope.emailData = res.data;
 			}, function (res) {
 				swal("Fail", "Some error occurred, try again.", "error");
 			});

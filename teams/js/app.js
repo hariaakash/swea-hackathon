@@ -16,6 +16,10 @@ angular.module('sweaApp', ['ngRoute'])
 				templateUrl: 'pages/register.html',
 				controller: 'regCtrl'
 			})
+			.when('/result', {
+				templateUrl: 'pages/result.html',
+				controller: 'resCtrl'
+			})
 			.otherwise({
 				redirectTo: '/login'
 			});
@@ -54,7 +58,7 @@ angular.module('sweaApp')
 		$rootScope.getTeamData = function () {
 			$http({
 				method: 'GET',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/',
+				url: 'http://localhost:5000/team/',
 				params: {
 					authKey: $rootScope.authKey
 				}
@@ -97,7 +101,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'http://sweapp-hariaakash.rhcloud.com/team/register',
+					url: 'http://localhost:5000/team/register',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
@@ -136,7 +140,7 @@ angular.module('sweaApp')
 		$scope.loginTeam = function () {
 			$http({
 				method: 'POST',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/login',
+				url: 'http://localhost:5000/team/login',
 				data: $scope.team
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -190,7 +194,7 @@ angular.module('sweaApp')
 				};
 				$http({
 					method: 'POST',
-					url: 'http://sweapp-hariaakash.rhcloud.com/team/addMember',
+					url: 'http://localhost:5000/team/addMember',
 					data: $scope.data
 				}).then(function (res) {
 					if (res.data.status == true) {
@@ -235,7 +239,7 @@ angular.module('sweaApp')
 			$scope.data.x = $scope.x;
 			$http({
 				method: 'POST',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/editMember',
+				url: 'http://localhost:5000/team/editMember',
 				data: $scope.data
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -272,7 +276,7 @@ angular.module('sweaApp')
 			};
 			$http({
 				method: 'POST',
-				url: 'http://sweapp-hariaakash.rhcloud.com/team/addTransaction',
+				url: 'http://localhost:5000/team/addTransaction',
 				data: $scope.data
 			}).then(function (res) {
 				if (res.data.status == true) {
@@ -299,4 +303,20 @@ angular.module('sweaApp')
 				$('#button_load').button('reset');
 			});
 		};
+	});
+
+// Result Controller
+angular.module('sweaApp')
+	.controller('resCtrl', function ($scope, $http) {
+		$http({
+			method: 'GET',
+			url: './res.json'
+		}).then(function (res) {
+			$scope.resData = res.data;
+			$scope.q = 0;
+			for (i = 0; i < res.data.length; i++)
+				$scope.q += res.data[i].user_count;
+		}, function (res) {
+			swal("Fail", "Some error occurred, try again.", "error");
+		});
 	});
