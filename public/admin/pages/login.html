@@ -1,0 +1,21 @@
+<div class="jumbotron">
+	<div class="row">
+		<h1 class="text-center">Admin Login</h1>
+		<br>
+		<div class="col-sm-6 col-sm-offset-3">
+			<form role="form" name="registerForm" ng-submit="loginAdmin()">
+				<div class="form-group">
+					<label>Admin Username:</label>
+					<input type="name" ng-model="admin.name" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label>Password:</label>
+					<input type="password" ng-model="admin.password" class="form-control" required>
+				</div>
+				<div>
+					<button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit" ng-disabled="registerForm.$invalid" id="button_load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Submitting"><strong>Login</strong></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
