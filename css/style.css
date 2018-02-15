@@ -1177,3 +1177,11 @@ img.sponsor:hover {
     text-align: center;
     color: #3498db;
 }
+
+@media all and (max-width: 640px) {
+    .sponsor {
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
