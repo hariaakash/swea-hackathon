@@ -108,10 +108,14 @@ ul.white-list li:before {
 header {
     position: relative;
     width: 100%;
-    background: -webkit-radial-gradient(circle, #23272a, #29afe2);
+    background: url(../img/banner.png) no-repeat center center fixed;
+    /* background: -webkit-radial-gradient(circle, #23272a, #29afe2);
     background: -o-radial-gradient(circle, #23272a, #29afe2);
     background: -moz-radial-gradient(circle, #23272a, #29afe2);
-    background: radial-gradient(circle, #23272a, #29afe2);
+    background: radial-gradient(circle, #23272a, #29afe2); */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
 }
 
